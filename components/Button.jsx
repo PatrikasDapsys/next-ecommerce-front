@@ -1,12 +1,16 @@
+import { primary } from "@/lib/colors";
 import styled, { css } from "styled-components";
 
-const StyledButton = styled.button`
+export const ButtonStyle = css`
   border: 0;
   padding: 5px 15px;
   border-radius: 5px;
+  text-decoration: none;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
   svg {
     height: 16px;
     margin-right: 5px;
@@ -28,10 +32,19 @@ const StyledButton = styled.button`
     `}
       ${(props) =>
     props.primary &&
+    !props.outline &&
     css`
       color: #fff;
-      background-color: #080c14;
-      border: 1px solid #080c14;
+      background-color: ${primary};
+      border: 1px solid ${primary};
+    `}
+      ${(props) =>
+    props.primary &&
+    props.outline &&
+    css`
+      color: ${primary};
+      background-color: transparent;
+      border: 1px solid ${primary};
     `}
   ${(props) =>
     props.size === "l" &&
@@ -42,6 +55,10 @@ const StyledButton = styled.button`
         height: 20px;
       }
     `}
+`;
+
+const StyledButton = styled.button`
+  ${ButtonStyle}
 `;
 
 export default function Button({ children, ...rest }) {
