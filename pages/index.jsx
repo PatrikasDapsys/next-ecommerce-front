@@ -1,7 +1,7 @@
 import Featured from "@/components/Featured";
 import Header from "@/components/Header";
 import NewProducts from "@/components/NewProducts";
-import { mongooseConnect } from "@/lib/moongose";
+import { mongooseConnect } from "@/lib/mongoose";
 import { Product } from "@/models/Product";
 
 export default function HomePage({ featuredProduct, newProducts }) {
