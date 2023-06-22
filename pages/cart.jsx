@@ -92,6 +92,22 @@ export default function CartPage({}) {
     totalPrice += price;
   }
 
+  if (window.location.href.includes("success")) {
+    return (
+      <>
+        <Header />
+        <Center>
+          <ColWrapper>
+            <Box>
+              <h1>Success</h1>
+              <p>We will email you when your order will be sent.</p>
+            </Box>
+          </ColWrapper>
+        </Center>
+      </>
+    );
+  }
+
   return (
     <>
       <Header />
