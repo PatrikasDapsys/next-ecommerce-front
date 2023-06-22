@@ -82,7 +82,7 @@ export default function CartPage({}) {
       cartProducts,
     });
     if (response.data.url) {
-      window.localStorage = response.data.url;
+      window.location = response.data.url;
     }
   }
 
