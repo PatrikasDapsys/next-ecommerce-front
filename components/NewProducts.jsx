@@ -7,12 +7,17 @@ const Title = styled.h2`
   margin: 30px 0 20px;
   font-weight: 500;
 `;
+const Container = styled.div`
+  padding: 0 20px 40px;
+`;
 
 export default function NewProducts({ products }) {
   return (
-    <Center>
-      <Title>New Arrivals</Title>
-      <ProductGrid products={products}/>
-    </Center>
+    <Container>
+      <Center>
+        <Title>New Arrivals</Title>
+        <ProductGrid products={products} />
+      </Center>
+    </Container>
   );
 }

@@ -11,7 +11,10 @@ const BigImage = styled.img`
 `;
 const BigImageWrapper = styled.div`
   text-align: center;
-  height: 200px;
+  min-height: auto;
+  @media screen and (min-width: 768px) {
+    height: 200px;
+  }
 `;
 
 const ImageButtons = styled.div`
@@ -23,9 +26,7 @@ const ImageButtons = styled.div`
 const ImageButton = styled.div`
   border: 2px solid #ddd;
   ${(props) =>
-    props.active
-      ? "border-color: #ddd;"
-      : "border-color: transparent;"}
+    props.active ? "border-color: #ddd;" : "border-color: transparent;"}
   height: 40px;
   padding: 4px;
   cursor: pointer;

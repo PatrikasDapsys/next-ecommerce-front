@@ -21,11 +21,19 @@ const WhiteBox = styled(Link)`
 `;
 
 const Title = styled(Link)`
+  text-align: center;
+  height: 2rem;
   font-weight: normal;
   font-size: 0.9rem;
   margin: 0;
   color: inherit;
   text-decoration: none;
+  display: flex;
+  justify-content: center;
+  @media screen and (min-width: 768px) {
+    display: block;
+    text-align: unset;
+  }
 `;
 
 const ProductInfoBox = styled.div`
@@ -33,15 +41,24 @@ const ProductInfoBox = styled.div`
 `;
 
 const PriceRow = styled.div`
-  display: flex;
+  display: block;
   align-items: center;
   justify-content: space-between;
   margin-top: 2px;
+  text-align: center;
+  gap: 5px;
+  @media screen and (min-width: 768px) {
+    text-align: unset;
+    display: flex;
+  }
 `;
 
 const Price = styled.div`
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: 600;
+  @media screen and (min-width: 768px) {
+    font-size: 1.5rem;
+  }
 `;
 
 export default function ProductWhiteBox({
@@ -65,7 +82,7 @@ export default function ProductWhiteBox({
         <Title href={url}>{title}</Title>
         <PriceRow>
           <Price className="">${price}</Price>
-          <Button primary outline onClick={() => addProduct(_id)}>
+          <Button block primary outline onClick={() => addProduct(_id)}>
             Add to Cart
           </Button>
         </PriceRow>

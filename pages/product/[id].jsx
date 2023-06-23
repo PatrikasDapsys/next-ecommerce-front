@@ -14,11 +14,18 @@ import styled from "styled-components";
 export default function ProductPage({ product }) {
   const { addProduct } = useContext(CartContext);
 
+  const Container = styled.div`
+    padding: 0 20px 40px;
+  `;
+
   const ColWrapper = styled.div`
     display: grid;
-    grid-template-columns: 0.8fr 1.2fr;
+    grid-template-columns:1fr;
     gap: 40px;
     margin-top: 40px;
+    @media screen and (min-width: 768px) {
+      grid-template-columns: 0.8fr 1.2fr;
+}
   `;
   const PriceRow = styled.div`
     display: flex;
@@ -32,25 +39,27 @@ export default function ProductPage({ product }) {
   return (
     <>
       <Header />
-      <Center>
-        <ColWrapper>
-          <WhiteBox>
-            <ProductImages images={product.images} />
-          </WhiteBox>
-          <div>
-            <Title>{product.title}</Title>
-            <p>{product.description}</p>
-            <PriceRow>
-              <Price className="">${product.price}</Price>
-              <div className="">
-                <Button primary onClick={() => addProduct(product._id)}>
-                  <CartIcon /> Add to Cart
-                </Button>
-              </div>
-            </PriceRow>
-          </div>
-        </ColWrapper>
-      </Center>
+      <Container>
+        <Center>
+          <ColWrapper>
+            <WhiteBox>
+              <ProductImages images={product.images} />
+            </WhiteBox>
+            <div>
+              <Title>{product.title}</Title>
+              <p>{product.description}</p>
+              <PriceRow>
+                <Price className="">${product.price}</Price>
+                <div className="">
+                  <Button primary onClick={() => addProduct(product._id)}>
+                    <CartIcon /> Add to Cart
+                  </Button>
+                </div>
+              </PriceRow>
+            </div>
+          </ColWrapper>
+        </Center>
+      </Container>
     </>
   );
 }
