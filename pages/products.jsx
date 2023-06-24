@@ -1,4 +1,5 @@
 import Center from "@/components/Center";
+import Container from "@/components/Container";
 import Header from "@/components/Header";
 import ProductGrid from "@/components/ProductGrid";
 import Title from "@/components/Title";
@@ -9,10 +10,12 @@ export default function ProductsPage({ products }) {
   return (
     <>
       <Header />
-      <Center>
-        <Title>All Products</Title>
-        <ProductGrid products={products}/>
-      </Center>
+      <Container>
+        <Center>
+          <Title>All Products</Title>
+          <ProductGrid products={products} />
+        </Center>
+      </Container>
     </>
   );
 }
@@ -20,10 +23,10 @@ export default function ProductsPage({ products }) {
 export async function getServerSideProps() {
   await mongooseConnect();
   const products = await Product.find({}, null, { sort: { "_id:": -1 } });
-  
+
   return {
     props: {
       products: JSON.parse(JSON.stringify(products)),
     },
   };
-} 
+}

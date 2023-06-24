@@ -1,6 +1,7 @@
 import Button from "@/components/Button";
 import { CartContext } from "@/components/CartContext";
 import Center from "@/components/Center";
+import Container from "@/components/Container";
 import Header from "@/components/Header";
 import Input from "@/components/Input";
 import Table from "@/components/Table";
@@ -8,9 +9,6 @@ import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 
-const Container = styled.div`
-  padding: 0 20px 40px;
-`;
 const ColWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr;

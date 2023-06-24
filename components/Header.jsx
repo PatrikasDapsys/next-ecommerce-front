@@ -72,8 +72,6 @@ export default function Header() {
   const [mobileNavActive, setMobileNavActive] = useState(false);
   const { cartProducts } = useContext(CartContext);
 
-  console.log(mobileNavActive);
-
   return (
     <StyledHeader>
       <Center>

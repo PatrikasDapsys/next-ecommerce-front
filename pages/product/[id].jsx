@@ -1,6 +1,7 @@
 import Button from "@/components/Button";
 import { CartContext } from "@/components/CartContext";
 import Center from "@/components/Center";
+import Container from "@/components/Container";
 import Header from "@/components/Header";
 import ProductImages from "@/components/ProductImages";
 import Title from "@/components/Title";
@@ -13,10 +14,6 @@ import styled from "styled-components";
 
 export default function ProductPage({ product }) {
   const { addProduct } = useContext(CartContext);
-
-  const Container = styled.div`
-    padding: 0 20px 40px;
-  `;
 
   const ColWrapper = styled.div`
     display: grid;
