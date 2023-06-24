@@ -45,6 +45,7 @@ export default function CategoryPage({
   const [filterValues, setFilterValues] = useState(
     category.properties.map((p) => ({ name: p.name, value: "all" }))
   );
+  const [sort, setSort] = useState("price_desc");
 
   function handleFilterChange(filterName, filterValue) {
     setFilterValues((prev) => {
@@ -59,6 +60,7 @@ export default function CategoryPage({
     const catIds = [category._id, ...(subCategories?.map((c) => c._id) || [])];
     const params = new URLSearchParams();
     params.set("categories", catIds.join(","));
+    params.set("sort", sort);
     filterValues.forEach((f) => {
       if (f.value !== "all") {
         params.set(f.name, f.value);
@@ -66,9 +68,9 @@ export default function CategoryPage({
     });
     const url = `/api/products?${params.toString()}`;
     axios.get(url).then((response) => {
-        setProducts(response.data);
+      setProducts(response.data);
     });
-  }, [filterValues]);
+  }, [filterValues, sort]);
 
   return (
     <>
@@ -96,6 +98,16 @@ export default function CategoryPage({
                   </select>
                 </Filter>
               ))}
+              <Filter>
+                <span>Sort:</span>
+                <select
+                  value={sort}
+                  onChange={(ev) => setSort(ev.target.value)}
+                >
+                  <option value="price_asc">Price, lowest first</option>
+                  <option value="price_desc">Price, highest first</option>
+                </select>
+              </Filter>
             </FiltersWrapper>
           </CategoryHeader>
           <ProductGrid products={products} />
