@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { ButtonStyle } from "./Button";
 import FlyingButtonOriginal from "react-flying-item";
 import { CartContext } from "./CartContext";
-import { useContext } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { primary } from "@/lib/colors";
 import css from "styled-jsx/css";
 
@@ -24,10 +24,11 @@ const FlyingButtonWrapper = styled.div`
     width: 100%;
     justify-content: center;
 
-  ${(props) =>
-    props.white && css`
+    ${(props) =>
+      props.white &&
+      css`
         background-color: white;
-    `}
+      `}
   }
 
   ${(props) =>
@@ -42,25 +43,25 @@ const FlyingButtonWrapper = styled.div`
 
 export default function FlyingButton(props) {
   const { addProduct } = useContext(CartContext);
+
+  function animateSendImageToCart(ev, imageSrc) {
+    console.log(ev, imageSrc);
+  }
+
   return (
-    <FlyingButtonWrapper
-      primary={props.primary}
-      white={props.white}
-      small={props.small}
-      onClick={() => addProduct(props._id)}
-    >
-      <FlyingButtonOriginal
-        {...props}
-        targetTop={"85%"}
-        targetLeft={"15%"}
-        flyingItemStyling={{
-          width: "auto",
-          heigth: "auto",
-          maxWidth: "100px",
-          maxHeight: "100px",
-          borderRadius: 0,
-        }}
-      />
-    </FlyingButtonWrapper>
+    <>
+      <div style={{ width: "1px", height: "1px" }}></div>
+      <FlyingButtonWrapper
+        primary={props.primary}
+        white={props.white}
+        small={props.small}
+        onClick={() => addProduct(props._id)}
+      >
+        <button
+          onClick={(ev) => animateSendImageToCart(ev, props.src)}
+          {...props}
+        />
+      </FlyingButtonWrapper>
+    </>
   );
 }
