@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import Button from "./Button";
 import Link from "next/link";
 import { useContext } from "react";
 import { CartContext } from "./CartContext";
+import FlyingButton from "./FlyingButton";
 
 const ProductWrapper = styled.div``;
 const WhiteBox = styled(Link)`
@@ -24,13 +24,14 @@ const Title = styled(Link)`
   text-align: center;
   height: 2rem;
   font-weight: normal;
-  font-size: 0.9rem;
+  font-size: 1rem;
   margin: 0;
   color: inherit;
   text-decoration: none;
   display: flex;
   justify-content: center;
   @media screen and (min-width: 768px) {
+    margin-bottom: 6px !important;
     display: block;
     text-align: unset;
   }
@@ -41,9 +42,7 @@ const ProductInfoBox = styled.div`
 `;
 
 const PriceRow = styled.div`
-  display: block;
-  align-items: center;
-  justify-content: space-between;
+  display: flex;
   margin-top: 2px;
   text-align: center;
   gap: 5px;
@@ -82,9 +81,9 @@ export default function ProductWhiteBox({
         <Title href={url}>{title}</Title>
         <PriceRow>
           <Price className="">${price}</Price>
-          <Button block primary outline onClick={() => addProduct(_id)}>
+          <FlyingButton src={images?.[0]} _id={_id}>
             Add to Cart
-          </Button>
+          </FlyingButton>
         </PriceRow>
       </ProductInfoBox>
     </ProductWrapper>

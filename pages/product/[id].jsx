@@ -2,6 +2,7 @@ import Button from "@/components/Button";
 import { CartContext } from "@/components/CartContext";
 import Center from "@/components/Center";
 import Container from "@/components/Container";
+import FlyingButton from "@/components/FlyingButton";
 import Header from "@/components/Header";
 import ProductImages from "@/components/ProductImages";
 import Title from "@/components/Title";
@@ -12,26 +13,25 @@ import { Product } from "@/models/Product";
 import { useContext } from "react";
 import styled from "styled-components";
 
+const ColWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  margin-top: 40px;
+  @media screen and (min-width: 768px) {
+    grid-template-columns: 0.8fr 1.2fr;
+  }
+`;
+const PriceRow = styled.div`
+  display: flex;
+  gap: 20px;
+  align-items: center;
+`;
+const Price = styled.span`
+  font-size: 1.4rem;
+`;
 export default function ProductPage({ product }) {
   const { addProduct } = useContext(CartContext);
-
-  const ColWrapper = styled.div`
-    display: grid;
-    grid-template-columns:1fr;
-    gap: 40px;
-    margin-top: 40px;
-    @media screen and (min-width: 768px) {
-      grid-template-columns: 0.8fr 1.2fr;
-}
-  `;
-  const PriceRow = styled.div`
-    display: flex;
-    gap: 20px;
-    align-items: center;
-  `;
-  const Price = styled.span`
-    font-size: 1.4rem;
-  `;
 
   return (
     <>
@@ -48,9 +48,13 @@ export default function ProductPage({ product }) {
               <PriceRow>
                 <Price className="">${product.price}</Price>
                 <div className="">
-                  <Button primary onClick={() => addProduct(product._id)}>
+                  <FlyingButton
+                    primary={`1`}
+                    _id={product._id}
+                    src={product.images[0]}
+                  >
                     <CartIcon /> Add to Cart
-                  </Button>
+                  </FlyingButton>
                 </div>
               </PriceRow>
             </div>
