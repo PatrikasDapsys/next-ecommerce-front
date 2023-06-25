@@ -1,11 +1,11 @@
 import styled from "styled-components";
 import Center from "./Center";
-import Button from "./Button";
 import ButtonLink from "./ButtonLink";
 import CartIcon from "./icons/CartIcon";
 import { useContext } from "react";
 import { CartContext } from "./CartContext";
 import FlyingButton from "./FlyingButton";
+import { RevealWrapper } from "next-reveal";
 
 const Bg = styled.div`
   background-color: #222;
@@ -68,47 +68,45 @@ const Column = styled.div`
 `;
 
 export default function Featured({ product }) {
-  const { addProduct } = useContext(CartContext);
-
-  function addFeaturedToCart() {
-    addProduct(product._id);
-  }
-
   return (
     <Bg>
       <Center>
         <ColumsWrapper>
           <Column>
             <div>
-              <Title>{product.title}</Title>
-              <Decs>{product.description}</Decs>
-              <ButtonsWrapper>
-                <ButtonLink
-                  href={"/product/" + product._id}
-                  white="1"
-                  outline="1"
-                >
-                  Read More
-                </ButtonLink>
-                {/* <Button white onClick={addFeaturedToCart}> */}
-                <FlyingButton
-                  _id={product._id}
-                  src={product.images[0]}
-                  white={`1`}
-                  small={'1'}
-                >
-                  <CartIcon />
-                  Add to Cart
-                </FlyingButton>
-                {/* </Button> */}
-              </ButtonsWrapper>
+              <RevealWrapper origin="left" delay={300}>
+                <Title>{product.title}</Title>
+                <Decs>{product.description}</Decs>
+                <RevealWrapper origin="left" delay={450}>
+                  <ButtonsWrapper>
+                    <ButtonLink
+                      href={"/product/" + product._id}
+                      white="1"
+                      outline="1"
+                    >
+                      Read More
+                    </ButtonLink>
+                    <FlyingButton
+                      _id={product._id}
+                      src={product.images[0]}
+                      white={`1`}
+                      small={"1"}
+                    >
+                      <CartIcon />
+                      Add to Cart
+                    </FlyingButton>
+                  </ButtonsWrapper>
+                </RevealWrapper>
+              </RevealWrapper>
             </div>
           </Column>
           <Column>
-            <img
-              src="https://www.freepnglogos.com/uploads/macbook-png/macbook-cleanmymac-the-best-mac-cleanup-app-for-macos-get-32.png"
-              alt=""
-            />
+            <RevealWrapper delay={0}> 
+              <img
+                src="https://www.freepnglogos.com/uploads/macbook-png/macbook-cleanmymac-the-best-mac-cleanup-app-for-macos-get-32.png"
+                alt=""
+              />
+            </RevealWrapper>
           </Column>
         </ColumsWrapper>
       </Center>

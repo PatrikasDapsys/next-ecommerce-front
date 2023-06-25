@@ -20,7 +20,6 @@ const FlyingButtonWrapper = styled.div`
       color: ${primary};
     `}
     border: 1px solid ${primary};
-    font-size: 1.1rem;
     align-items: center;
     width: 100%;
     justify-content: center;
@@ -52,8 +51,8 @@ export default function FlyingButton(props) {
     >
       <FlyingButtonOriginal
         {...props}
-        targetTop={"15%"}
-        targetLeft={"85%"}
+        targetTop={"85%"}
+        targetLeft={"15%"}
         flyingItemStyling={{
           width: "auto",
           heigth: "auto",
