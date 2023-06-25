@@ -59,7 +59,7 @@ export default function CategoriesPage({ mainCategories, categoriesProducts }) {
               </CategoryTitle>
               <CategoryGrid className="">
                 {categoriesProducts[cat._id].map((p) => (
-                  <ProductWhiteBox {...p} />
+                  <ProductWhiteBox {...p} key={p._id}/>
                 ))}
                 <ShowMoreSquare href={"/categories/" + cat._id}>
                   Show more &rarr;

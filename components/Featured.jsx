@@ -10,7 +10,9 @@ import FlyingButton from "./FlyingButton";
 const Bg = styled.div`
   background-color: #222;
   color: #fff;
-  padding: 50px 20px;
+  padding: 110px 20px 50px;
+  position: relative;
+  top: -60px;
 `;
 const Title = styled.h1`
   margin: 0;

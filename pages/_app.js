@@ -8,6 +8,7 @@ const GlobalStyles = createGlobalStyle`
     margin: 0;
     font-family: 'Roboto', sans-serif;
     background-color: #eee;
+    overflow-x: hidden;
   }
 `;
 

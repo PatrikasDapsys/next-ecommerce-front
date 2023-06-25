@@ -1,13 +1,17 @@
 import Link from "next/link";
 import styled from "styled-components";
 import Center from "./Center";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CartContext } from "./CartContext";
 import BarsIcon from "./icons/BarsIcon";
 
 const StyledHeader = styled.header`
-  background-color: #222;
+  background-color: rgba(34, 34, 34, 0.8);
+  backdrop-filter: blur(20px);
   padding: 0 20px;
+  position: sticky;
+  top: 0;
+  z-index: 8;
 `;
 const Logo = styled(Link)`
   color: #fff;
@@ -35,10 +39,13 @@ const StyledNav = styled.nav`
     props.mobileNavActive
       ? `
     display: block;
-  `
+    width: 100vw; 
+    height: 100vw;
+    background-color: #222;
+    `
       : `
     display: none;
-  `}
+    `}
   gap: 15px;
   position: fixed;
   top: 0;
@@ -46,7 +53,6 @@ const StyledNav = styled.nav`
   left: 0;
   right: 0;
   padding: 70px 20px 20px;
-  background-color: #222;
   @media screen and (min-width: 768px) {
     display: flex;
     position: static;
@@ -70,7 +76,28 @@ const NavButton = styled.button`
 
 export default function Header() {
   const [mobileNavActive, setMobileNavActive] = useState(false);
+  const [windowWidth, setWindowWidth] = useState(null);
   const { cartProducts } = useContext(CartContext);
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+    if (typeof window !== "undefined") {
+      setWindowWidth(window.innerWidth);
+      window.addEventListener("resize", handleResize);
+    }
+    return () => {
+      if (typeof window !== "undefined") {
+        window.removeEventListener("resize", handleResize);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (mobileNavActive && windowWidth < 768) {
+      setMobileNavActive(false)
+    }
+  }, [windowWidth]);
 
   return (
     <StyledHeader>

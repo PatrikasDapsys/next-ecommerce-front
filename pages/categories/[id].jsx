@@ -17,11 +17,17 @@ const CategoryHeader = styled.div`
   h1 {
     font-size: 1.5em;
   }
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const FiltersWrapper = styled.div`
   display: flex;
   gap: 10px;
+  @media (max-width: 768px) {
+   flex-direction: column;
+  }
 `;
 const Filter = styled.div`
   background-color: #ddd;
@@ -34,6 +40,7 @@ const Filter = styled.div`
     background-color: transparent;
     border: 0;
     font-size: inherit;
+    flex: 1;
   }
 `;
 
