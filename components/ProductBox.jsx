@@ -43,6 +43,7 @@ const ProductInfoBox = styled.div`
 
 const PriceRow = styled.div`
   display: flex;
+  width: 100%;
   margin-top: 2px;
   text-align: center;
   gap: 5px;

@@ -31,7 +31,7 @@ const ColumsWrapper = styled.div`
   grid-template-columns: 1.1fr;
   gap: 40px;
   text-align: center;
-  img {
+  img.main-image {
     max-width: 100%;
     max-height: 200px;
     display: block;
@@ -39,6 +39,7 @@ const ColumsWrapper = styled.div`
   }
   div:nth-child(1) {
     order: 1;
+    width: 100%;
   }
   @media screen and (min-width: 768px) {
     text-align: unset;
@@ -46,7 +47,7 @@ const ColumsWrapper = styled.div`
     div:nth-child(1) {
       order: 0;
     }
-    img {
+    img.main-image {
       max-width: 100%;
     }
   }
@@ -101,8 +102,9 @@ export default function Featured({ product }) {
             </div>
           </Column>
           <Column>
-            <RevealWrapper delay={0}> 
+            <RevealWrapper delay={0}>
               <img
+                className="main-image"
                 src="https://www.freepnglogos.com/uploads/macbook-png/macbook-cleanmymac-the-best-mac-cleanup-app-for-macos-get-32.png"
                 alt=""
               />
