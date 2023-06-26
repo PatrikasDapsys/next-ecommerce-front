@@ -4,6 +4,7 @@ import Center from "./Center";
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "./CartContext";
 import BarsIcon from "./icons/BarsIcon";
+import SearchIcon from "./icons/SearchIcon";
 
 const StyledHeader = styled.header`
   background-color: rgba(34, 34, 34, 0.8);
@@ -22,6 +23,7 @@ const Logo = styled(Link)`
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 20px 0;
 `;
 const NavLink = styled(Link)`
@@ -29,6 +31,9 @@ const NavLink = styled(Link)`
   color: #aaa;
   text-decoration: none;
   padding: 10px 0;
+  svg {
+    height: 18px;
+  }
   @media screen and (min-width: 768px) {
     padding: 0;
   }
@@ -40,7 +45,7 @@ const StyledNav = styled.nav`
       ? `
     display: block;
     width: 100vw; 
-    height: 100vw;
+    height: 100vh;
     background-color: #222;
     `
       : `
@@ -74,6 +79,19 @@ const NavButton = styled.button`
   }
 `;
 
+const SideIcons = styled.div`
+  display: flex;
+  align-items: center;
+  a {
+    color: #fff;
+    svg {
+      width: 14px;
+      height: 14px;
+      padding: unset;
+    }
+  }
+`;
+
 export default function Header() {
   const [mobileNavActive, setMobileNavActive] = useState(false);
   const [windowWidth, setWindowWidth] = useState(null);
@@ -95,7 +113,7 @@ export default function Header() {
 
   useEffect(() => {
     if (mobileNavActive && windowWidth < 768) {
-      setMobileNavActive(false)
+      setMobileNavActive(false);
     }
   }, [windowWidth]);
 
@@ -111,9 +129,14 @@ export default function Header() {
             <NavLink href={"/account"}>Account</NavLink>
             <NavLink href={"/cart"}>Cart ({cartProducts?.length})</NavLink>
           </StyledNav>
-          <NavButton onClick={() => setMobileNavActive(!mobileNavActive)}>
-            <BarsIcon />
-          </NavButton>
+          <SideIcons>
+            <Link href={"/search"}>
+              <SearchIcon />
+            </Link>
+            <NavButton onClick={() => setMobileNavActive(!mobileNavActive)}>
+              <BarsIcon />
+            </NavButton>
+          </SideIcons>
         </Wrapper>
       </Center>
     </StyledHeader>

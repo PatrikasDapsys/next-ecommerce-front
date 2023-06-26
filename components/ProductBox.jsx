@@ -21,8 +21,7 @@ const WhiteBox = styled(Link)`
 `;
 
 const Title = styled(Link)`
-  text-align: center;
-  height: 2rem;
+  text-align: center; 
   font-weight: normal;
   font-size: 1rem;
   margin: 0;
@@ -43,6 +42,7 @@ const ProductInfoBox = styled.div`
 
 const PriceRow = styled.div`
   display: flex;
+  flex-direction: column;
   width: 100%;
   margin-top: 2px;
   text-align: center;
@@ -50,6 +50,7 @@ const PriceRow = styled.div`
   @media screen and (min-width: 768px) {
     text-align: unset;
     display: flex;
+    flex-direction: row;
   }
 `;
 
@@ -69,7 +70,6 @@ export default function ProductWhiteBox({
   images,
 }) {
   const url = "/product/" + _id;
-  const { addProduct } = useContext(CartContext);
 
   return (
     <ProductWrapper>

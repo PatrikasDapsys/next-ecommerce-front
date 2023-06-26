@@ -3,13 +3,24 @@ import Header from "@/components/Header";
 import NewProducts from "@/components/NewProducts";
 import { mongooseConnect } from "@/lib/mongoose";
 import { Product } from "@/models/Product";
+import { useLayoutEffect } from "react";
 
 export default function HomePage({ featuredProduct, newProducts }) {
+  function ScrollToTop() {
+    window.scrollTo(0, 0);
+  }
+
+  useLayoutEffect(() => {
+    setTimeout(() => {
+      ScrollToTop();
+    }, 0);
+  }, []);
+
   return (
     <div>
       <Header />
       <Featured product={featuredProduct} />
-      <NewProducts products={newProducts}/> 
+      <NewProducts products={newProducts} />
     </div>
   );
 }
