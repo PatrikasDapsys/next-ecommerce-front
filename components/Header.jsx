@@ -91,6 +91,13 @@ const SideIcons = styled.div`
     }
   }
 `;
+const NavLinks = styled.div`
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  margin-right: 20px;
+`
+
 
 export default function Header() {
   const [mobileNavActive, setMobileNavActive] = useState(false);
@@ -121,14 +128,16 @@ export default function Header() {
     <StyledHeader>
       <Center>
         <Wrapper>
-          <Logo href={"/"}>Ecommerce</Logo>
-          <StyledNav mobileNavActive={mobileNavActive}>
-            <NavLink href={"/"}>Home</NavLink>
-            <NavLink href={"/products"}>All Products</NavLink>
-            <NavLink href={"/categories"}>Categories</NavLink>
-            <NavLink href={"/account"}>Account</NavLink>
-            <NavLink href={"/cart"}>Cart ({cartProducts?.length})</NavLink>
-          </StyledNav>
+          <NavLinks className="">
+            <Logo href={"/"}>Ecommerce</Logo>
+            <StyledNav mobileNavActive={mobileNavActive}>
+              <NavLink href={"/"}>Home</NavLink>
+              <NavLink href={"/products"}>All Products</NavLink>
+              <NavLink href={"/categories"}>Categories</NavLink>
+              <NavLink href={"/account"}>Account</NavLink>
+              <NavLink href={"/cart"}>Cart ({cartProducts?.length})</NavLink>
+            </StyledNav>
+          </NavLinks>
           <SideIcons>
             <Link href={"/search"}>
               <SearchIcon />
