@@ -10,7 +10,6 @@ const Wrapper = styled.div`
     margin-top:40px;
     `
       : `
-    border: 5px solid blue;
     `}
 `;
 

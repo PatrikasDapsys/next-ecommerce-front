@@ -11,6 +11,9 @@ const GlobalStyles = createGlobalStyle`
     background-color: #eee;
     overflow-x: hidden;
   }
+  hr {
+    border-color: #ffffff70;
+  }
 `;
 
 export default function App({

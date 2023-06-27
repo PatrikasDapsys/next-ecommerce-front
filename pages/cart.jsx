@@ -93,6 +93,14 @@ export default function CartPage({}) {
       setIsSuccess(true);
       clearCart();
     }
+    axios.get("/api/information").then((response) => {
+      setName(response.data.name);
+      setEmail(response.data.email);
+      setCountry(response.data.country);
+      setCity(response.data.city);
+      setPostalCode(response.data.postalCode);
+      setStreetAddress(response.data.streetAddress);
+    });
   }, []);
 
   function increaseQuantity(id) {
@@ -145,7 +153,7 @@ export default function CartPage({}) {
       <Container>
         <Center>
           <ColWrapper>
-            <RevealWrapper origin="left"  delay={0}>
+            <RevealWrapper origin="left" delay={0}>
               <Box>
                 <h2>Cart:</h2>
                 {!cartProducts?.length && (

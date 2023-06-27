@@ -1,14 +1,15 @@
-import Button from "@/components/Button";
+import Button, { ButtonStyle } from "@/components/Button";
 import Center from "@/components/Center";
 import Container from "@/components/Container";
 import Header from "@/components/Header";
 import Input from "@/components/Input";
+import Spinner from "@/components/Spinner";
 import Title from "@/components/Title";
 import WhiteBox from "@/components/WhiteBox";
 import axios from "axios";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { RevealWrapper } from "next-reveal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const ColsWrapper = styled.div`
@@ -22,6 +23,36 @@ const CityHolder = styled.div`
   gap: 5px;
 `;
 
+const ButtonCenter = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const AnimatedButton = styled.div`
+  ${ButtonStyle};
+  text-align: center;
+  width: unset;
+  @keyframes buttonAnimation {
+    0% {
+      transform: scale(1); /* Initial size */
+    }
+    50% {
+      transform: scale(0.95); /* Smaller size */
+    }
+    100% {
+      transform: scale(1); /* Original size */
+    }
+  }
+  ${(props) =>
+    props.animation
+      ? `
+    animation: buttonAnimation 100ms;
+  `
+      : `
+    
+  `}
+`;
+
 export default function AccountPage() {
   const { data: session } = useSession();
   const [name, setName] = useState("");
@@ -30,6 +61,8 @@ export default function AccountPage() {
   const [city, setCity] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [streetAddress, setStreetAddress] = useState("");
+  const [loaded, setLoaded] = useState(false);
+  const [isButtonClicked, setIsButtonClicked] = useState(false);
 
   async function logout() {
     await signOut({
@@ -51,6 +84,25 @@ export default function AccountPage() {
     axios.put("/api/information", data);
   }
 
+  function buttonClicked() {
+    setIsButtonClicked(true);
+    setTimeout(() => {
+      setIsButtonClicked(false);
+    }, 100);
+  }
+
+  useEffect(() => {
+    axios.get("/api/information").then((response) => {
+      setName(response.data.name);
+      setEmail(response.data.email);
+      setCountry(response.data.country);
+      setCity(response.data.city);
+      setPostalCode(response.data.postalCode);
+      setStreetAddress(response.data.streetAddress);
+      setLoaded(true);
+    });
+  }, []);
+
   return (
     <>
       <Header />
@@ -68,63 +120,80 @@ export default function AccountPage() {
               <RevealWrapper origin delay={200}>
                 <WhiteBox>
                   <h2>Account details</h2>
-                  <Input
-                    type="text"
-                    placeholder="Name"
-                    value={name}
-                    name="name"
-                    onChange={(ev) => setName(ev.target.value)}
-                  />
-                  <Input
-                    type="text"
-                    placeholder="Email"
-                    value={email}
-                    name="email"
-                    onChange={(ev) => setEmail(ev.target.value)}
-                  />
-                  <CityHolder>
-                    <Input
-                      type="text"
-                      placeholder="Country"
-                      value={country}
-                      name="country"
-                      onChange={(ev) => setCountry(ev.target.value)}
-                    />
-                    <Input
-                      type="text"
-                      placeholder="City"
-                      value={city}
-                      name="city"
-                      onChange={(ev) => setCity(ev.target.value)}
-                    />
-                  </CityHolder>
-                  <Input
-                    type="text"
-                    placeholder="Postal Code"
-                    value={postalCode}
-                    name="postalCode"
-                    onChange={(ev) => setPostalCode(ev.target.value)}
-                  />
-                  <Input
-                    type="text"
-                    placeholder="Street Address"
-                    value={streetAddress}
-                    name="streetAddress"
-                    onChange={(ev) => setStreetAddress(ev.target.value)}
-                  />
-                  <Button block primary onClick={saveInformation}>
-                    Save
-                  </Button>
-                  <hr />
+                  {!loaded && <Spinner fullWidth />}
+                  {loaded && (
+                    <>
+                      <Input
+                        type="text"
+                        placeholder="Name"
+                        value={name}
+                        name="name"
+                        onChange={(ev) => setName(ev.target.value)}
+                      />
+                      <Input
+                        type="text"
+                        placeholder="Email"
+                        value={email}
+                        name="email"
+                        onChange={(ev) => setEmail(ev.target.value)}
+                      />
+                      <CityHolder>
+                        <Input
+                          type="text"
+                          placeholder="Country"
+                          value={country}
+                          name="country"
+                          onChange={(ev) => setCountry(ev.target.value)}
+                        />
+                        <Input
+                          type="text"
+                          placeholder="City"
+                          value={city}
+                          name="city"
+                          onChange={(ev) => setCity(ev.target.value)}
+                        />
+                      </CityHolder>
+                      <Input
+                        type="text"
+                        placeholder="Postal Code"
+                        value={postalCode}
+                        name="postalCode"
+                        onChange={(ev) => setPostalCode(ev.target.value)}
+                      />
+                      <Input
+                        type="text"
+                        placeholder="Street Address"
+                        value={streetAddress}
+                        name="streetAddress"
+                        onChange={(ev) => setStreetAddress(ev.target.value)}
+                      />
+                      <AnimatedButton
+                        block
+                        primary
+                        animation={isButtonClicked}
+                        onClick={() => {
+                          buttonClicked();
+                          saveInformation();
+                        }}
+                      >
+                        Save
+                      </AnimatedButton>
+                    </>
+                  )}
+                  <hr style={{ marginTop: "20px" }} />
                   {session && (
-                    <Button primary onClick={logout}>
-                      Log out
-                    </Button>
+                    <ButtonCenter className="">
+                      <Button primary onClick={logout}>
+                        Log out
+                      </Button>
+                    </ButtonCenter>
                   )}
                   {!session && (
-                    <Button primary onClick={login}>
-                      Login
-                    </Button>
+                    <ButtonCenter className="">
+                      <Button primary onClick={login}>
+                        Login
+                      </Button>
+                    </ButtonCenter>
                   )}
                 </WhiteBox>
               </RevealWrapper>
