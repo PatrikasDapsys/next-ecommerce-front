@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import Input from "@/components/Input";
 import Table from "@/components/Table";
 import axios from "axios";
+import { useSession } from "next-auth/react";
 import { RevealWrapper } from "next-reveal";
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
@@ -64,6 +65,7 @@ const CityHolder = styled.div`
 `;
 
 export default function CartPage({}) {
+  const { data: session } = useSession();
   const [products, setProducts] = useState([]);
   const { cartProducts, addProduct, removeProduct, clearCart } =
     useContext(CartContext);
@@ -93,15 +95,21 @@ export default function CartPage({}) {
       setIsSuccess(true);
       clearCart();
     }
-    axios.get("/api/information").then((response) => {
-      setName(response.data.name);
-      setEmail(response.data.email);
-      setCountry(response.data.country);
-      setCity(response.data.city);
-      setPostalCode(response.data.postalCode);
-      setStreetAddress(response.data.streetAddress);
-    });
   }, []);
+
+  useEffect(() => {
+    if (!session) {
+      return;
+    }
+    axios.get("/api/information").then((response) => {
+      setName(response.data?.name);
+      setEmail(response.data?.email);
+      setCountry(response.data?.country);
+      setCity(response.data?.city);
+      setPostalCode(response.data?.postalCode);
+      setStreetAddress(response.data?.streetAddress);
+    });
+  }, [session]);
 
   function increaseQuantity(id) {
     addProduct(id);

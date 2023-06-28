@@ -9,12 +9,12 @@ const Title = styled.h2`
   font-weight: 500;
 `;
 
-export default function NewProducts({ products }) {
+export default function NewProducts({ products, wishedProduct }) {
   return (
     <Container>
       <Center>
         <Title>New Arrivals</Title>
-        <ProductGrid products={products} />
+        <ProductGrid products={products} wishedProduct={wishedProduct}/>
       </Center>
     </Container>
   );

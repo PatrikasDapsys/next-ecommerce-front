@@ -1,8 +1,13 @@
 import styled from "styled-components";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CartContext } from "./CartContext";
 import FlyingButton from "./FlyingButton";
+import HeartOutlineIcon from "./icons/HeartOutline";
+import css from "styled-jsx/css";
+import HeartSolidIcon from "./icons/HeartSolid";
+import axios from "axios";
+import { useSession } from "next-auth/react";
 
 const ProductWrapper = styled.div``;
 const WhiteBox = styled(Link)`
@@ -14,6 +19,7 @@ const WhiteBox = styled(Link)`
   align-items: center;
   justify-content: center;
   border-radius: 10px;
+  position: relative;
   img {
     max-width: 100%;
     max-height: 80px;
@@ -21,7 +27,7 @@ const WhiteBox = styled(Link)`
 `;
 
 const Title = styled(Link)`
-  text-align: center; 
+  text-align: center;
   font-weight: normal;
   font-size: 1rem;
   margin: 0;
@@ -61,6 +67,24 @@ const Price = styled.div`
     font-size: 1.5rem;
   }
 `;
+const WishlistButton = styled.button`
+  border: 0;
+  width: 40px;
+  height: 40px;
+  position: absolute;
+  background: transparent;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  svg {
+    width: 16px;
+  }
+  ${(props) =>
+    props.wished &&
+    css`
+      color: red;
+    `}
+`;
 
 export default function ProductWhiteBox({
   _id,
@@ -68,13 +92,36 @@ export default function ProductWhiteBox({
   description,
   price,
   images,
+  wished = false,
+  onRemoveFromWishlist = () => {},
 }) {
   const url = "/product/" + _id;
+  const [isWished, setIswished] = useState(wished);
+  const { data: session } = useSession();
+  function addToWishlist(ev) {
+    ev.preventDefault();
+    ev.stopPropagation();
+    const nextValue = !isWished;
+    if (nextValue === false && onRemoveFromWishlist) {
+      onRemoveFromWishlist(_id);
+    }
+    axios
+      .post("/api/wishlist", {
+        product: _id,
+      })
+      .then(() => {});
+    setIswished(nextValue);
+  }
 
   return (
     <ProductWrapper>
       <WhiteBox href={url}>
         <div className="">
+          {session && (
+            <WishlistButton wished={isWished} onClick={addToWishlist}>
+              {isWished ? <HeartSolidIcon /> : <HeartOutlineIcon />}
+            </WishlistButton>
+          )}
           <img src={images?.[0]} alt="" />
         </div>
       </WhiteBox>

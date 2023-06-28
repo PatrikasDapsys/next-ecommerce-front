@@ -3,8 +3,8 @@ import Center from "@/components/Center";
 import Container from "@/components/Container";
 import Header from "@/components/Header";
 import Input from "@/components/Input";
+import ProductWhiteBox from "@/components/ProductBox";
 import Spinner from "@/components/Spinner";
-import Title from "@/components/Title";
 import WhiteBox from "@/components/WhiteBox";
 import axios from "axios";
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -17,6 +17,9 @@ const ColsWrapper = styled.div`
   grid-template-columns: 1.2fr 0.8fr;
   gap: 40px;
   margin: 40px 0;
+  p {
+    margin: 9px;
+  }
 `;
 const CityHolder = styled.div`
   display: flex;
@@ -53,6 +56,12 @@ const AnimatedButton = styled.div`
   `}
 `;
 
+const WishedProductGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+`;
+
 export default function AccountPage() {
   const { data: session } = useSession();
   const [name, setName] = useState("");
@@ -61,8 +70,10 @@ export default function AccountPage() {
   const [city, setCity] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [streetAddress, setStreetAddress] = useState("");
-  const [loaded, setLoaded] = useState(false);
+  const [informationLoaded, setInformationLoaded] = useState(true);
+  const [wishlistLoaded, setWishlistLoaded] = useState(true);
   const [isButtonClicked, setIsButtonClicked] = useState(false);
+  const [wishedProducts, setWishedProducts] = useState([]);
 
   async function logout() {
     await signOut({
@@ -92,16 +103,31 @@ export default function AccountPage() {
   }
 
   useEffect(() => {
+    if (!session) {
+      return;
+    }
     axios.get("/api/information").then((response) => {
-      setName(response.data.name);
-      setEmail(response.data.email);
-      setCountry(response.data.country);
-      setCity(response.data.city);
-      setPostalCode(response.data.postalCode);
-      setStreetAddress(response.data.streetAddress);
-      setLoaded(true);
+      setWishlistLoaded(false);
+      setInformationLoaded(false);
+      setName(response.data?.name);
+      setEmail(response.data?.email);
+      setCountry(response.data?.country);
+      setCity(response.data?.city);
+      setPostalCode(response.data?.postalCode);
+      setStreetAddress(response.data?.streetAddress);
+      setInformationLoaded(true);
     });
-  }, []);
+    axios.get("/api/wishlist").then((res) => {
+      setWishedProducts(res.data.map((wp) => wp.product));
+      setWishlistLoaded(true);
+    });
+  }, [session]);
+
+  function productRemovedFromWishlist(idToRemove) {
+    setWishedProducts((products) => {
+      return [...products.filter((p) => p._id.toString() !== idToRemove)];
+    });
+  }
 
   return (
     <>
@@ -113,15 +139,41 @@ export default function AccountPage() {
               <RevealWrapper origin="left" delay={50}>
                 <WhiteBox>
                   <h2>Wishlist</h2>
+                  {!wishlistLoaded && <Spinner fullWidth />}
+
+                  {wishlistLoaded && (
+                    <>
+                      <WishedProductGrid>
+                        {wishedProducts.length > 0 &&
+                          wishedProducts.map((wp) => (
+                            <ProductWhiteBox
+                              key={wp._id}
+                              {...wp}
+                              wished={true}
+                              onRemoveFromWishlist={productRemovedFromWishlist}
+                            />
+                          ))}
+                      </WishedProductGrid>
+                      {wishedProducts.length === 0 && (
+                        <>
+                          {session ? (
+                            <p>Your wishlist is empty.</p>
+                          ) : (
+                            <p>Login to add products to your wishlist.</p>
+                          )}
+                        </>
+                      )}
+                    </>
+                  )}
                 </WhiteBox>
               </RevealWrapper>
             </div>
             <div>
               <RevealWrapper origin delay={200}>
                 <WhiteBox>
-                  <h2>Account details</h2>
-                  {!loaded && <Spinner fullWidth />}
-                  {loaded && (
+                  {session ? <h2>Account details</h2> : <h2>Login</h2>}
+                  {!informationLoaded && <Spinner fullWidth />}
+                  {informationLoaded && session && (
                     <>
                       <Input
                         type="text"
@@ -191,7 +243,7 @@ export default function AccountPage() {
                   {!session && (
                     <ButtonCenter className="">
                       <Button primary onClick={login}>
-                        Login
+                        Login with Google
                       </Button>
                     </ButtonCenter>
                   )}
