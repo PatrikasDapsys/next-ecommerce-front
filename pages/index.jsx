@@ -1,3 +1,4 @@
+import { Featureds } from "@/models/Featureds";
 import Featured from "@/components/Featured";
 import Header from "@/components/Header";
 import NewProducts from "@/components/NewProducts";
@@ -19,7 +20,7 @@ export default function HomePage({
 
   useEffect(() => {
     setTimeout(() => {
-      ScrollToTop();
+      ScrollToTop(); 
     }, 0);
   }, []);
 
@@ -34,7 +35,10 @@ export default function HomePage({
 
 export async function getServerSideProps(ctx) {
   await mongooseConnect();
-  const featuredProductId = "6491a8be2472d0c68f63949d";
+  const featuredProductSetting = await Featureds.findOne({
+    name: "featuredProductId",
+  });
+  const featuredProductId = featuredProductSetting.value;
   const featuredProduct = await Product.findById(featuredProductId);
   const newProducts = await Product.find({}, null, {
     sort: { _id: -1 },

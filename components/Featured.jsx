@@ -105,7 +105,7 @@ export default function Featured({ product }) {
             <RevealWrapper delay={0}>
               <img
                 className="main-image"
-                src="https://www.freepnglogos.com/uploads/macbook-png/macbook-cleanmymac-the-best-mac-cleanup-app-for-macos-get-32.png"
+                src={product.images[0]}
                 alt=""
               />
             </RevealWrapper>
