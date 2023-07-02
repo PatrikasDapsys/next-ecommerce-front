@@ -1,4 +1,4 @@
-import { Featureds } from "@/models/Featureds";
+import { Settings } from "@/models/Settings";
 import Featured from "@/components/Featured";
 import Header from "@/components/Header";
 import NewProducts from "@/components/NewProducts";
@@ -35,7 +35,7 @@ export default function HomePage({
 
 export async function getServerSideProps(ctx) {
   await mongooseConnect();
-  const featuredProductSetting = await Featureds.findOne({
+  const featuredProductSetting = await Settings.findOne({
     name: "featuredProductId",
   });
   const featuredProductId = featuredProductSetting.value;

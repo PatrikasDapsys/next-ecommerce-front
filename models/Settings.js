@@ -1,6 +1,6 @@
 const { Schema, models, model } = require("mongoose");
 
-const FeaturedsSchema = new Schema(
+const SettingsSchema = new Schema(
   {
     name: { type: String, required: true, unique: true },
     value: { type: String },
@@ -10,4 +10,4 @@ const FeaturedsSchema = new Schema(
   }
 );
 
-export const Featureds = models?.Featureds || model("Featureds", FeaturedsSchema);
+export const Settings = models?.Settings || model("Settings", SettingsSchema);
