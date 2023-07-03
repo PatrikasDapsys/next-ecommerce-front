@@ -68,9 +68,11 @@ export default function FlyingButton(props) {
     imgRef.current.style.display = "inline-block";
     imgRef.current.style.left = ev.clientX - 50 + "px";
     imgRef.current.style.top = ev.clientY - 50 + "px";
-    setTimeout(() => {
-      imgRef.current.style.display = "none";
-    }, 1000);
+    if (imgRef.current) {
+      setTimeout(() => {
+        imgRef.current.style.display = "none";
+      }, 1000);
+    }
   }
 
   useEffect(() => {
