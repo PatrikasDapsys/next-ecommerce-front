@@ -9,6 +9,6 @@ export default async function handle(req, res) {
   }
   if (req.method === "GET") {
     const { product } = req.query;
-    res.json(await Review.find({ product }));
+    res.json(await Review.find({ product }, null, { sort: { createdAt: -1 } }));
   }
 }
