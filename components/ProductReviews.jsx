@@ -116,10 +116,10 @@ export default function ProductReviews({ product }) {
           <WhiteBox>
             <Subtitle>All Reviews</Subtitle>
             {reviewsLoading && <Spinner fullWidth={true} />}
-            {reviews.length === 0 && <p>There aren't any reviews yet.</p>}
+            {reviews.length === 0 && <p>There aren&apos;t any reviews yet.</p>}
             {reviews.length > 0 &&
               reviews.map((review) => (
-                <ReviewWrapper>
+                <ReviewWrapper key={review.createdAt}>
                   <ReviewHeader>
                     <StarsRating
                       size={"sm"}
