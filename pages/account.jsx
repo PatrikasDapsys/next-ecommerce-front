@@ -22,6 +22,9 @@ const ColsWrapper = styled.div`
   p {
     margin: 9px;
   }
+  @media (max-width: 470px) {
+    grid-template-columns: none;
+  }
 `;
 const CityHolder = styled.div`
   display: flex;
